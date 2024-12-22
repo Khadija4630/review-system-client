@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Slide1 from '../../assets/slide1.jpg';
-import Slide2 from '../../assets/slide8.jpeg';
 import Slide3 from '../../assets/slide6.jpg';
+import Slide4 from '../../assets/slide9.avif'
 
 const Banner = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -34,7 +34,7 @@ const Banner = () => {
       paragraph: 'Get the best services from our website.',
     },
     {
-      image: Slide2,
+      image: Slide4,
       text: 'Join Our Community of Reviewers!',
       paragraph: 'Share your experiences and help others.',
     },
@@ -72,13 +72,13 @@ const Banner = () => {
       ))}
            <button
         onClick={prevSlide}
-        className="absolute top-1/2 left-4 transform -translate-y-1/2 text-white text-3xl bg-purple-600 opacity-75 hover:opacity-100 transition-opacity duration-300"
+        className="absolute top-1/2 left-4 transform -translate-y-1/2 text-purple-800 text-5xl opacity-75 hover:opacity-100 transition-opacity duration-300"
       >
         &lt;
       </button>
       <button
         onClick={nextSlide}
-        className="absolute top-1/2 right-4 transform -translate-y-1/2 text-white text-3xl bg-purple-600 opacity-75 hover:opacity-100 transition-opacity duration-300"
+        className="absolute top-1/2 right-4 transform -translate-y-1/2 text-purple-800 text-5xl   opacity-75 hover:opacity-100 transition-opacity duration-300"
       >
         &gt;
       </button>

@@ -1,20 +1,23 @@
 import React from 'react';
+import Partner1 from '../../assets/partner1.jpeg';
+import Partner2 from '../../assets/partner2.png';
+import Partner3 from '../../assets/partner3.jpeg';
 
 const MeetOurPartners = () => {
   const partners = [
     {
-      name: 'Partner A',
-      logo: 'https://via.placeholder.com/100',
+      name: 'Partner Of Google',
+      logo: Partner1,
       description: 'Providing excellent database services for seamless user experiences.',
     },
     {
-      name: 'Partner B',
-      logo: 'https://via.placeholder.com/100',
+      name: 'Partner Of Apple',
+      logo: Partner2,
       description: 'Specialized in secure and fast cloud hosting solutions.',
     },
     {
-      name: 'Partner C',
-      logo: 'https://via.placeholder.com/100',
+      name: 'Partner Of Microsoft',
+      logo: Partner3,
       description: 'Leading design services for a sleek and intuitive UI.',
     },
   ];
