@@ -3,16 +3,21 @@ import { NavLink,useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import { AuthContext } from "../../Routes/Router";
 import Logo from "../../assets/logo.png"
+import axios from "axios";
 
 const Navbar = () => {
-    const{ user} = useContext(AuthContext);
+    const{ user,setUser} = useContext(AuthContext);
     const navigate = useNavigate();
 
     const handleLogout = async() => {
       try{
-        await signOutUser();
-        toast.success ('Logged out successfully');
-        navigate("/login");
+        const response = await axios.post("http://localhost:5000/logout", { withCredentials: true });
+        if (response.data.success) {
+            localStorage.removeItem("authToken");
+            setUser(null); 
+            toast.success("Logged out successfully");
+            navigate("/login");
+          }
   
       } catch (error) {
         console.error("Logout failed:", error);
@@ -67,19 +72,30 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content mt-3 w-52 p-2 shadow bg-base-100 rounded-box z-50"
           >
             {Links}
+            {user && (
+                <>
+            {Link}
+            </>
+        )}
           </ul>
+          
         </div>
       </div>
       <div className="navbar-start flex md:items-center">
-        <a href="/" className="flex md:items-center">
-          <img className="w-8" src={Logo} alt="Logo" />
-          <span className="text-xl font-bold ml-2 text-center p-1 hidden md:block">
+        <a href="/" className="flex md:items-center lg:pl-4">
+          <img className="w-8 " src={Logo} alt="Logo" />
+          <span className="text-xl font-bold ml-2 text-center pt-1 hidden md:block">
            Service Review System
           </span>
         </a>
       </div>
       <div className="navbar-center hidden md:flex">
-        <ul className="menu menu-horizontal px-1">{Links}</ul>
+        <ul className="menu menu-horizontal lg:px-3 ">{Links}</ul>
+        {user && (
+          <>
+            {Link}
+          </>
+        )}
       </div>
       <div className="navbar-end bg-base-2
       00">
