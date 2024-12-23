@@ -10,9 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Services from './Components/Pages/Services';
 import ReviewsPage from './Components/Pages/ReviewsPage';
 import HomePage from './Components/Pages/HomePage';
-import PrivateRoutes from './Routes/Router';
+import Router from './Routes/Router';
 import Login from './Components/Login/Login';
 import Register from './Components/Register/Register';
+import ServicesDetails from './Components/Pages/ServicesDetails';
+import { ChakraProvider } from '@chakra-ui/react';
 
 const router = createBrowserRouter([
 
@@ -26,8 +28,12 @@ const router = createBrowserRouter([
         element: <ReviewsPage />,
       },
       {
-        path: "/services",
+        path: "/services-page",
         element: <Services></Services>,
+        },
+      {
+        path: "/services/:id",
+        element: <ServicesDetails></ServicesDetails>,
         },
         {
           path: "/login",
@@ -43,10 +49,10 @@ const router = createBrowserRouter([
     ])
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <PrivateRoutes>
-    <RouterProvider router={router} />
-    </PrivateRoutes>
-    <ToastContainer />
-  </StrictMode>,
+<StrictMode>
+       <Router>
+        <RouterProvider router={router} />
+        </Router>
+        <ToastContainer />
+</StrictMode>
 )

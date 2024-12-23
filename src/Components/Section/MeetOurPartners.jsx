@@ -6,17 +6,17 @@ import Partner3 from '../../assets/partner3.jpeg';
 const MeetOurPartners = () => {
   const partners = [
     {
-      name: 'Partner Of Google',
+      name: 'Partnered With Google',
       logo: Partner1,
       description: 'Providing excellent database services for seamless user experiences.',
     },
     {
-      name: 'Partner Of Apple',
+      name: 'Partnered With Apple',
       logo: Partner2,
       description: 'Specialized in secure and fast cloud hosting solutions.',
     },
     {
-      name: 'Partner Of Microsoft',
+      name: 'Partnered With Microsoft',
       logo: Partner3,
       description: 'Leading design services for a sleek and intuitive UI.',
     },

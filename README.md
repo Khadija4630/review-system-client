@@ -46,7 +46,19 @@ Frontend:
 
 React.js
 
-Tailwind CSS or Bootstrap for styling
+Tailwind CSS 
+
+DaisyUI
+
+Chakra
+
+Framer-motion
+
+Axios
+
+React-Rating
+
+React-Toastify
 
 Backend:
 

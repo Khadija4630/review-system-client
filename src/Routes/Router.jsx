@@ -4,7 +4,7 @@ import { auth } from "../Firebase/firebase.init";
 
 export const AuthContext = createContext(null);
 
-const PrivateRoutes = ({ children }) => {
+const Router = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -64,4 +64,4 @@ const PrivateRoutes = ({ children }) => {
   );
 };
 
-export default PrivateRoutes;
+export default Router;

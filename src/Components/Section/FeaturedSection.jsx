@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const FeaturedServices = () => {
@@ -23,10 +24,14 @@ const FeaturedServices = () => {
 
   return (
     <div >
-        <h2 className='text-center font-bold text-4xl mt-4'> Featured Section</h2>
+        <h2 className='text-center font-bold text-4xl mt-5 mb-8'> Featured Section</h2>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
       {services.map((service) => (
-        <div key={service._id} className="card shadow-lg p-4 rounded-lg">
+        <motion.div key={service._id} className="card shadow-lg  rounded-lg p-3" whileHover={{ scale: 1.05 }}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ amount: 0.5 }}
+        transition={{  duration: 0.6 }}>
           <img src={service.image} alt={service.title} className="w-full h-40 object-cover rounded-lg mb-4" />
           <h2 className="text-xl font-bold">{service.title}</h2>
           <p className="text-gray-600">{service.description}</p>
@@ -37,7 +42,7 @@ const FeaturedServices = () => {
           >
             See Details
           </button>
-        </div>
+        </motion.div>
       ))}
     </div>
     </div>
