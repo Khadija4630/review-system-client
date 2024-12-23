@@ -8,12 +8,12 @@ import FeaturedServices from '../Section/FeaturedSection';
 const HomePage = () => {
     const location = useLocation();
 
-    const hideComponents = ['/reviews','/services', '/reviews:id','/login','/register'];
+    const hideComponents = ['/my-reviews','/services','/services:id','my-services','/add-service','/login','/register'];
     return (
         <div className=' max-w-6xl mx-auto'>
             <Navbar></Navbar>
             <Outlet></Outlet>
-            {!hideComponents.includes(location.pathname) && (
+            {!hideComponents.includes(location.pathname) || (
                 <>
             <Banner></Banner>
             <FeaturedServices></FeaturedServices>

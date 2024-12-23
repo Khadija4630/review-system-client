@@ -1,18 +1,20 @@
 import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import ReactRating from "react-rating";
 import { AuthContext } from "../../Routes/Router";
 import Rating from 'react-rating';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar, faStarHalfAlt} from '@fortawesome/free-solid-svg-icons';
+
 
 const ServicesDetails = () => {
   const { id } = useParams();
   const [service, setService] = useState([]);
   const [reviews, setReviews] = useState([]);
-//   const [newReview, setNewReview] = useState("");
-//   const [rating, setRating] = useState(0);
+  const [newReview, setNewReview] = useState("");
+  const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(true);
-//   const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     const fetchServicesDetails = async () => {
       setLoading(true);
@@ -31,32 +33,32 @@ const ServicesDetails = () => {
     fetchServicesDetails();
   }, [id]);
 
-//   const addReview = async () => {
-//     try {
-//       const reviewData = {
-//         reviewText: newReview,
-//         rating,
-//         userName: user.name,
-//         userPhoto: user.photo,
-//         serviceId: id,
-//         postedDate: new Date(),
-//       };
-//       await axios.post("http://localhost:5000/reviews", reviewData, {
-//         // headers: { Authorization: `Bearer ${user.token}` },
-//       });
-//       setReviews((prev) => [...prev, reviewData]);
-//       setNewReview("");
-//       setRating(0);
-//     } catch (error) {
-//       console.error("Error adding review:", error);
-//     }
-//   };
+  const addReview = async () => {
+    try {
+      const reviewData = {
+        reviewText: newReview,
+        rating,
+        userName: user.name,
+        userPhoto: user.photo,
+        serviceId: id,
+        postedDate: new Date(),
+      };
+      await axios.post("http://localhost:5000/reviews", reviewData, {
+        // headers: { Authorization: `Bearer ${user.token}` },
+      });
+      setReviews((prev) => [...prev, reviewData]);
+      setNewReview("");
+      setRating(0);
+    } catch (error) {
+      console.error("Error adding review:", error);
+    }
+  };
 
 const { title, description, image, price, details, location, duration, ratings, category } = service;
   
   return (
     <div className="p-6">
-      <div className="mb-8">
+      <div className="  rounded-lg shadow-lg p-4 border border-gray-300 mb-8">
         <h1 className="text-4xl font-bold text-center">{title}</h1>
         <img
           src={image}
@@ -64,23 +66,25 @@ const { title, description, image, price, details, location, duration, ratings, 
           className="w-full h-80 object-cover rounded-lg mt-4"
         />
         
-        <p className="mt-2 text-gray-600 text-xl md:text-2xl">{details}</p>
-        <p className="mt-4 font-semibold text-lg">Category: {category}</p>
-        <p className="mt-4 font-semibold text-lg md:text-xl">Location: {location}</p>
-        <p className="mt-4 font-semibold text-lg md:text-xl">Duration: {duration}</p>
-        <p className="mt-2 text-gray-600 text-xl md:text-2xl">{description}</p>
-        <p className="mt-2 font-semibold text-lg">Price: ${price}</p>
-        <div className="mt-4">
-        <p className="font-semibold text-lg">Rating:</p>
+        <p className="mt-4 text-gray-600 text-xl md:text-2xl font-medium">Details - {details}</p>
+        <p className="mt-4 font-semibold text-lg">Category : {category}</p>
+        <p className="mt-4 font-semibold text-lg md:text-xl">Location : {location}</p>
+        <p className="mt-4 font-semibold text-lg md:text-xl">Duration : {duration}</p>
+        <p className="mt-4 text-gray-600  font-medium text-xl md:text-2xl">Description : {description}</p>
+        <p className="mt-4 font-semibold text-lg">Price : ${price}</p>
+        <div className="mt-4" style={{ fontSize: '2rem' }}>
+        <p className="font-semibold text-lg">Rating : 
         <Rating 
-          initialRating={5} 
+          initialRating={ratings} 
           readonly 
-          fullSymbol="🌟"
-          emptySymbol="⭐" 
+          fullSymbol= {<FontAwesomeIcon icon={faStar} className="text-yellow-500" />}
+          emptySymbol= {<FontAwesomeIcon icon ={faStarHalfAlt} className="text-yellow-300"/>}
+         
         />
+        </p>
       </div>
        </div>
-    {/*  <div className="mb-8">
+     <div className="mb-8">
         <h2 className="text-2xl font-bold">Reviews ({reviews.length})</h2>
         {reviews.map((review, index) => (
           <div key={index} className="p-4 border rounded-lg my-4">
@@ -93,8 +97,9 @@ const { title, description, image, price, details, location, duration, ratings, 
               <p className="font-semibold">{review.userName}</p>
             </div>
             <p>{review.reviewText}</p>
-            <p className="text-yellow-500">
-              <ReactRating initialRating={review.rating} readonly />
+            <p className="text-yellow-500"  style={{ fontSize: '2rem,pr-2' }}>
+              <Rating initialRating={review.rating} readonly  fullSymbol= {<FontAwesomeIcon icon={faStar} className="text-yellow-500" />}
+          emptySymbol= {<FontAwesomeIcon icon ={faStarHalfAlt} className="text-yellow-300"/>} />
             </p>
             <p className="text-gray-500 text-sm">
               {new Date(review.postedDate).toLocaleString()}
@@ -111,14 +116,16 @@ const { title, description, image, price, details, location, duration, ratings, 
           onChange={(e) => setNewReview(e.target.value)}
           placeholder="Write your review here..."
         ></textarea>
-        <ReactRating onChange={(rate) => setRating(rate)} />
+        <Rating onChange={(rate) => setRating(rate)} style={{ fontSize:'2rem' }}   fullSymbol= {<FontAwesomeIcon icon={faStar} className="text-yellow-400" />}
+          emptySymbol= {<FontAwesomeIcon icon ={faStarHalfAlt} className="text-yellow-300"/>}/>
         <button
           className="mt-4 bg-purple-500 text-white px-4 py-2 rounded"
           onClick={addReview}
         >
           Submit Review
         </button>
-      </div> */}
+      </div>
+      
     </div>
   );
 };
