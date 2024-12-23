@@ -5,19 +5,25 @@ import Footer from '../Footer/Footer';
 import MeetOurPartners from '../Section/MeetOurPartners';
 import Banner from '../Banner/Banner';
 import FeaturedServices from '../Section/FeaturedSection';
+import ChooseUs from '../Section/ChooseUs';
+import CustomerReviews from '../Section/CustomerReviews';
+import SubscribeSection from '../Section/SubscribeSection';
 const HomePage = () => {
     const location = useLocation();
 
-    const hideComponents = ['/my-reviews','/services','/services:id','my-services','/add-service','/login','/register'];
+    const hideComponents = ['/services','/services:id','my-services','/add-service', '/my-reviews','/login','/register'];
     return (
-        <div className=' max-w-6xl mx-auto'>
+        <div className=' mx-auto'>
             <Navbar></Navbar>
             <Outlet></Outlet>
-            {!hideComponents.includes(location.pathname) || (
+            {!hideComponents.includes(location.pathname) && (
                 <>
             <Banner></Banner>
             <FeaturedServices></FeaturedServices>
             <MeetOurPartners></MeetOurPartners>
+            <ChooseUs></ChooseUs>
+            <CustomerReviews></CustomerReviews>
+            <SubscribeSection></SubscribeSection>
             </>
             )}
             <Footer></Footer>
