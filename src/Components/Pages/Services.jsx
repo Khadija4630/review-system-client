@@ -28,6 +28,9 @@ const Services = () => {
 
   return (
     <div className="p-6">
+      <Helmet>
+        <title>Services | Review System</title>
+      </Helmet>
       <h2 className="text-center font-bold text-4xl mt-5 mb-8">All Services</h2>
       {/* {loading ? (
         <div className="flex justify-center items-center h-64">

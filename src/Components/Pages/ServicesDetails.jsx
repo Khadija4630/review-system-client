@@ -5,7 +5,8 @@ import { AuthContext } from "../../Routes/Router";
 import Rating from 'react-rating';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt} from '@fortawesome/free-solid-svg-icons';
-
+import { ClipLoader } from "react-spinners";
+import { toast } from 'react-toastify';
 
 const ServicesDetails = () => {
   const { id } = useParams();
@@ -23,6 +24,8 @@ const ServicesDetails = () => {
           `http://localhost:5000/services/${id}`
         );
         setService(response.data);
+        toast.success ("Service details fetched successfully");
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching service details:", error);
       } finally {
@@ -49,15 +52,23 @@ const ServicesDetails = () => {
       setReviews((prev) => [...prev, reviewData]);
       setNewReview("");
       setRating(0);
+      toast.success("Review added successfully");
     } catch (error) {
       console.error("Error adding review:", error);
     }
   };
 
+  if (loading) return  <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+    <ClipLoader size={50} color={"#800080"} loading={true} />
+  </div>;
+
 const { title, description, image, price, details, location, duration, ratings, category } = service;
   
   return (
     <div className="p-6">
+       <Helmet>
+        <title>Details | Review System</title>
+      </Helmet>
       <div className="  rounded-lg shadow-lg p-4 border border-gray-300 mb-8">
         <h1 className="text-4xl font-bold text-center">{title}</h1>
         <img

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 import { AuthContext } from "../../Routes/Router";
+import { ClipLoader } from "react-spinners";
 
 const MyReviews = () => {
   const { user } = useContext(AuthContext);
@@ -9,15 +10,16 @@ const MyReviews = () => {
   const [selectedReview, setSelectedReview] = useState(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-
-  // Fetch User Reviews
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/my-reviews?userEmail=${user.email}`);
         setReviews(response.data);
+        setLoading(false);
       } catch (error) {
         console.error("Error fetching reviews:", error);
+
       }
     };
 
@@ -49,8 +51,15 @@ const MyReviews = () => {
     }
   };
 
+  if (loading) return  <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+  <ClipLoader size={50} color={"#800080"} loading={true} />
+</div>;
+
   return (
     <div className="container mx-auto py-8 px-4">
+        <Helmet>
+        <title>My Reviews | Review System</title>
+      </Helmet>
       <h2 className="text-3xl font-bold text-center mb-6">My Reviews</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">

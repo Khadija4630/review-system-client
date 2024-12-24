@@ -68,7 +68,10 @@ const Login = () => {
     }, [navigate, setUser,location]);
   
     return (
-      <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600">
+     <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600">
+        <Helmet>
+        <title>Login | Review System</title>
+      </Helmet>
         <div className="bg-white p-8 rounded-lg shadow-lg w-96">
           <h2 className="text-3xl font-semibold text-center text-purple-700 mb-6">Login</h2>
   

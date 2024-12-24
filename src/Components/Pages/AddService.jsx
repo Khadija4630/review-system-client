@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import axios from "axios";
 import { AuthContext } from "../../Routes/Router";
 import {toast } from 'react-toastify';
+import { ClipLoader } from "react-spinners";
 
 const AddService = () => {
   const { user } = useContext(AuthContext);
@@ -34,7 +35,7 @@ const AddService = () => {
       const response = await axios.post("http://localhost:5000/add-service", serviceData);
       if (response.status === 201) {
         setSuccessMessage("Service added successfully!");
-        toast.sucess ("Service added successfully!");  
+        toast.success ("Service added successfully!");  
         setFormData({
           image: "",
           title: "",
@@ -52,6 +53,9 @@ const AddService = () => {
 
   return (
     <div className="container mx-auto py-8 px-4">
+        <Helmet>
+        <title>Add Service | Review System</title>
+      </Helmet>
       <h2 className="text-3xl font-bold text-center mb-6">Add a New Service</h2>
       {successMessage && (
         <div className="text-green-500 bg-green-100 p-4 rounded mb-6">

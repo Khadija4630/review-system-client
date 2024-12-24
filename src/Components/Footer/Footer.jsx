@@ -30,7 +30,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/about" className="text-gray-400 hover:text-purple-400">
+              <a href="/about-us" className="text-gray-400 hover:text-purple-400">
                 About Us
               </a>
             </li>
@@ -40,7 +40,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              <a href="/contact" className="text-gray-400 hover:text-purple-400">
+              <a href="/contact-us" className="text-gray-400 hover:text-purple-400">
                 Contact
               </a>
             </li>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { AuthContext } from "../../Routes/Router";
 import UpdateModal from "../Modals/UpdateModal";
 import {toast} from 'react-toastify';
+import { ClipLoader } from "react-spinners";
 
 const MyServices = () => {
   const { user } = useContext(AuthContext);
@@ -12,12 +13,14 @@ const MyServices = () => {
   const [selectedService, setSelectedService] = useState(null);
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/my-services?email=${user.email}`, {withCredentials:true} );
         setServices(response.data);
+        setLoading (false);
       } catch (error) {
         console.error("Error fetching services:", error);
       }
@@ -49,9 +52,16 @@ const MyServices = () => {
       console.error("Error deleting service:", error);
     }
   };
+  
+ if (loading) return  <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+   <ClipLoader size={50} color={"#800080"} loading={true} />
+ </div>;
 
   return (
     <div className="container mx-auto py-8 px-4">
+        <Helmet>
+        <title>My Services | Review System</title>
+      </Helmet>
       <h2 className="text-3xl font-bold text-center mb-6">My Services</h2>
       <input
         type="text"

@@ -13,6 +13,7 @@ const Register = () => {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  
 
   const validatePassword = (password) => {
     const errors = {};
@@ -52,6 +53,9 @@ const Register = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-pink-500 to-purple-600">
+      <Helmet>
+        <title>Register | Review System</title>
+      </Helmet>
       <form
         onSubmit={handleSubmit}
         className="bg-white p-8 rounded-lg shadow-md w-full max-w-md"
