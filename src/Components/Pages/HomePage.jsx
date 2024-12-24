@@ -13,7 +13,7 @@ const HomePage = () => {
 
     const hideComponents = ['/services','/services:id','my-services','/add-service', '/my-reviews','/login','/register'];
     return (
-        <div className=' mx-auto'>
+        <div className=' max-w-7xl mx-auto'>
             <Navbar></Navbar>
             <Outlet></Outlet>
             {!hideComponents.includes(location.pathname) && (

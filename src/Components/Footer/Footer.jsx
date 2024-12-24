@@ -72,6 +72,7 @@ const Footer = () => {
             </ul>
             </div>
       </div>
+      <div className="divider  bg-gray-700 rounded-2xl"></div>
       <p className="text-gray-500 text-lg text-center mt-3">&copy; {new Date().getFullYear()} Service Review System. All rights reserved.</p>
     </footer>
     

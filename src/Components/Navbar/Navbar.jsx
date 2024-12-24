@@ -44,8 +44,8 @@ const Navbar = () => {
 
   const Link = (
     <>
-      <NavLink to="/add-service " className="block text-center text-lg lg:mx-4 mx-2  hover:text-purple-500">Add Service</NavLink>
-      <NavLink to="/my-reviews " className="block text-center text-lg lg:mx-4 mx-2  hover:text-purple-500">My Reviews</NavLink>
+      <NavLink to="/add-service" className="block text-center text-lg lg:mx-4 mx-2  hover:text-purple-500">Add Service</NavLink>
+      <NavLink to="/my-reviews" className="block text-center text-lg lg:mx-4 mx-2  hover:text-purple-500">My Reviews</NavLink>
     </>
   );
   return (
