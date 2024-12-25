@@ -91,13 +91,13 @@ const MyServices = () => {
               <td className="border border-gray-300 p-2">
                 <button
                   onClick={() => handleUpdate(service)}
-                  className="bg-purple-500 text-white px-3 py-1 rounded mr-2"
+                  className="bg-purple-500 text-white px-3 py-1 rounded mr-2 mb-2"
                 >
                   Update
                 </button>
                 <button
                   onClick={() => handleDelete(service)}
-                  className="bg-red-500 text-white px-3 py-1 rounded"
+                  className="bg-red-400 text-white px-3 py-1 rounded mb-2"
                 >
                   Delete
                 </button>

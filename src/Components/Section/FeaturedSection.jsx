@@ -38,12 +38,12 @@ const FeaturedServices = () => {
           <h2 className="text-xl font-bold">{service.title}</h2>
           <p className="text-gray-600">{service.description}</p>
           <p className="text-purple-500 font-semibold">Price: ${service.price}</p>
-          <button
-            className="mt-4 bg-purple-500 text-white px-4 py-2 rounded"
+          <div className='mt-auto'> <button
+            className="mt-4 bg-purple-500 text-white px-4 py-2 rounded w-full"
             onClick={() => navigate(`/services/${service._id}`)}
           >
             See Details
-          </button>
+          </button></div>
         </motion.div>
       ))}
     </div>

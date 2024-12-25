@@ -14,15 +14,17 @@ const Services = () => {
   const [searchKeyword, setSearchKeyword] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
-
+  const [toastShown, setToastShown] = useState(false);
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/services`);
         const data = response.data;
-        setServices(data);
-        setFilteredServices(data);
+        setFilteredServices (data);
+        if (!toastShown) {
         toast.success ('Services fetched successfully');
+        setToastShown(true);
+        }
         const uniqueCategories = Array.from(new Set(data.map(service => service.category)));
         setCategories(uniqueCategories);
       } catch (error) {
@@ -33,7 +35,7 @@ const Services = () => {
     
     };
     fetchServices();
-  }, []);
+  }, [toastShown]);
 
   const handleSearch = async () => {
     try {
@@ -114,12 +116,14 @@ if (loading) return  <div style={{ display: "flex", justifyContent: "center", ma
               <p className="text-gray-600">{service.description}</p>
               <p className="text-purple-500 font-semibold">Category: {service.category}</p>
               <p className="text-purple-500 font-semibold">Price: ${service.price}</p>
+              <div className='mt-auto'>
               <button
-                className="mt-4 bg-purple-500 text-white px-4 py-2 rounded"
+                className="mt-4 bg-purple-500 text-white px-4 py-2 rounded w-full"
                 onClick={() => navigate(`/services/${service._id}`)}
               >
                 See Details
               </button>
+              </div>
             </motion.div>
           ))}
         </div>

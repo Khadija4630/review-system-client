@@ -57,7 +57,7 @@ const MyReviews = () => {
 </div>;
 
   return (
-    <div className="container mx-auto py-8 px-4 bg-base-100 opacity-80">
+    <div className="container mx-auto py-8 px-4 bg-base-100 ">
         <Helmet>
         <title>My Reviews | Review System</title>
       </Helmet>
@@ -84,7 +84,7 @@ const MyReviews = () => {
                 </button>
                 <button
                   onClick={() => handleDelete(review)}
-                  className="bg-red-500 text-white px-3 py-1 rounded"
+                  className="bg-red-400 text-white px-3 py-1 rounded"
                 >
                   Delete
                 </button>

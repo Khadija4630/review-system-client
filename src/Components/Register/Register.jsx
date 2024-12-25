@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import {Helmet } from 'react-helmet-async';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -13,7 +14,7 @@ const Register = () => {
 
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
-  
+
 
   const validatePassword = (password) => {
     const errors = {};

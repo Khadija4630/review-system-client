@@ -6,7 +6,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from "../../Routes/Router";
-
+import {Helmet} from "react-helmet-async";
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -22,12 +22,11 @@ const Login = () => {
   
       try {
         await signInWithEmailAndPassword(auth,email, password); 
-        const response = await axios.post("http://localhost:5000/login", { email, password }, { withCredentials: true });
+        const response = await axios.post("http://localhost:5000/login", { email, password },{ withCredentials: true });
         navigate("/"); 
         if (response.data.success) {
           localStorage.setItem("authToken", response.data.user);
           toast.success("Login successful");
-          
         }
       } catch (error) {
         toast.error("Invalid email or password");
