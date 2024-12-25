@@ -78,11 +78,11 @@ const { title, description, image, price, details, location, duration, ratings, 
           className="w-full h-80 object-cover rounded-lg mt-4"
         />
         
-        <p className="mt-4 text-gray-600 text-xl md:text-2xl font-medium">Details - {details}</p>
+        <p className="mt-4 text-gray-600 text-xl  font-medium">Details - {details}</p>
+        <p className="mt-4 text-gray-600  font-medium text-xl ">Description : {description}</p>
+        <p className="mt-4 font-semibold text-lg">Location : {location}</p>
+        <p className="mt-4 font-semibold text-lg ">Duration : {duration}</p>
         <p className="mt-4 font-semibold text-lg">Category : {category}</p>
-        <p className="mt-4 font-semibold text-lg md:text-xl">Location : {location}</p>
-        <p className="mt-4 font-semibold text-lg md:text-xl">Duration : {duration}</p>
-        <p className="mt-4 text-gray-600  font-medium text-xl md:text-2xl">Description : {description}</p>
         <p className="mt-4 font-semibold text-lg">Price : ${price}</p>
         <div className="mt-4" style={{ fontSize: '2rem' }}>
         <p className="font-semibold text-lg">Rating : 

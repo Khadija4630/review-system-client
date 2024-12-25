@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { motion } from "framer-motion";
 import axios from 'axios';
 import { ClipLoader } from 'react-spinners';
-import { Helmet} from "react-helmet-async";
+import {toast } from 'react-toastify';
 
 
 const CustomerReviews = () => {
@@ -34,7 +34,7 @@ const CustomerReviews = () => {
       try {
         const res = await axios.get('http://localhost:5000/customer-reviews'); 
         setReviews(res.data);
-        console.log(res.data);
+        toast.success ('Customer Reviews fetched successfully!');
       } catch (error) {
         console.error('Error fetching reviews:', error);
         setReviews(staticReviews);
@@ -57,9 +57,6 @@ const CustomerReviews = () => {
 
     return (
         <div>
-          <Helmet>
-            <title>Customer Reviews| Review System</title>
-          </Helmet>
       <motion.section className="bg-gray-50 opacity-50 py-12 px-6 rounded-lg shadow-md mt-4" initial={{ opacity: 0, y: 50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}>

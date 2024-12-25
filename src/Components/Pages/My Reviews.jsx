@@ -16,8 +16,7 @@ const MyReviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/my-reviews?userEmail=${user.email}`);
-        // const response = await axios.get (`http://localhost:5000/my-reviews`)
+        const response = await axios.get(`http://localhost:5000/my-reviews`);
         setReviews(response.data);
         toast.success ('Reviews fetched successfully')
         setLoading(false);
@@ -58,7 +57,7 @@ const MyReviews = () => {
 </div>;
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 bg-base-100 opacity-80">
         <Helmet>
         <title>My Reviews | Review System</title>
       </Helmet>
@@ -68,18 +67,18 @@ const MyReviews = () => {
         {reviews.map((review) => (
           <motion.div
             key={review._id}
-            className="bg-white p-4 rounded shadow-lg"
+            className="bg-white p-4 rounded shadow-lg flex flex-col justify-between h-full"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
             <h3 className="text-xl font-semibold mb-2">{review.serviceTitle}</h3>
-            <p className="text-gray-600 mb-2">{review.text}</p>
-            <div className="flex justify-between items-center">
-              <span className="text-yellow-500">⭐ {review.rating}</span>
-              <div>
+            <p className="text-gray-600 mb-4 flex-grow">{review.reviewMessage}</p>
+            <div className="flex justify-between items-center border-t pt-4 mt-4">
+              <span className="text-yellow-500 flex items-center text-lg">⭐ {review.rating}</span>
+              <div className="flex space-x-2">
                 <button
                   onClick={() => handleUpdate(review)}
-                  className="bg-blue-500 text-white px-3 py-1 rounded mr-2"
+                  className="bg-purple-500 text-white px-3 py-1 rounded "
                 >
                   Update
                 </button>
@@ -91,11 +90,13 @@ const MyReviews = () => {
                 </button>
               </div>
             </div>
+            <div className="flex justify-end">
+        <p className=" font-bold text-sm">{`- ${review.author}`}</p>
+      </div>
           </motion.div>
         ))}
       </div>
 
-      {/* Update Modal */}
       {isUpdateModalOpen && (
         <motion.div
           initial={{ opacity: 0 }}
@@ -141,7 +142,7 @@ const MyReviews = () => {
                 <label className="block text-gray-700 font-semibold mb-2">Text Review</label>
                 <textarea
                   name="text"
-                  defaultValue={selectedReview.text}
+                  defaultValue={selectedReview.reviewMessage}
                   className="w-full border border-gray-300 rounded p-2"
                   required
                 ></textarea>

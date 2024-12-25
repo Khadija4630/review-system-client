@@ -6,22 +6,25 @@ import { Helmet} from "react-helmet-async";
 import { toast } from 'react-toastify';
 import { ClipLoader } from "react-spinners";
 
-
 const Services = () => {
   const [services, setServices] = useState([]);
+  const [filteredServices, setFilteredServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const [searchKeyword, setSearchKeyword] = useState("");
   const [categories, setCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
 
-
   useEffect(() => {
     const fetchServices = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/services`);
-        setServices(response.data);
+        const data = response.data;
+        setServices(data);
+        setFilteredServices(data);
         toast.success ('Services fetched successfully');
+        const uniqueCategories = Array.from(new Set(data.map(service => service.category)));
+        setCategories(uniqueCategories);
       } catch (error) {
         console.error('Error fetching services:', error);
       } finally{
@@ -38,7 +41,7 @@ const Services = () => {
       const response = await axios.get(
         `http://localhost:5000/search-services?keyword=${searchKeyword}`
       );
-      setServices(response.data);
+      setFilteredServices(response.data);
     } catch (error) {
       console.error("Error searching services:", error);
     } finally {
@@ -47,17 +50,13 @@ const Services = () => {
   };
 
   const handleFilter = async (category) => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        `http://localhost:5000/filter-services?category=${category}`
-      );
-      setServices(response.data);
-    } catch (error) {
-      console.error("Error filtering services:", error);
-    } finally {
-      setLoading(false);
-    }
+      setSelectedCategory(category);
+      if (category === "") {
+        setFilteredServices(services); 
+      } else {
+        const filtered = services.filter(service => service.category === category);
+        setFilteredServices(filtered);
+      };
   };
 
 if (loading) return  <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
@@ -65,7 +64,7 @@ if (loading) return  <div style={{ display: "flex", justifyContent: "center", ma
 </div>;   
 
   return (
-    <div className="p-6">
+    <div className="p-6  ">
       <Helmet>
         <title>Services | Review System</title>
       </Helmet>
@@ -90,7 +89,6 @@ if (loading) return  <div style={{ display: "flex", justifyContent: "center", ma
         <select
           value={selectedCategory}
           onChange={(e) => {
-            setSelectedCategory(e.target.value);
             handleFilter(e.target.value);
           }}
           className="border p-2 rounded"
@@ -105,7 +103,7 @@ if (loading) return  <div style={{ display: "flex", justifyContent: "center", ma
       </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {services.map((service) => (
+          {filteredServices.map((service) => (
             <motion.div
               key={service._id}
               className="card shadow-lg rounded-lg p-3"

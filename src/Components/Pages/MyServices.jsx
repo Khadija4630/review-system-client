@@ -22,6 +22,7 @@ const MyServices = () => {
         const response = await axios.get(`http://localhost:5000/my-services`, {withCredentials:true} );
         setServices(response.data);
         setLoading (false);
+        toast.success(' My Services fetched successfully');
       } catch (error) {
         console.error("Error fetching services:", error);
       }
@@ -90,7 +91,7 @@ const MyServices = () => {
               <td className="border border-gray-300 p-2">
                 <button
                   onClick={() => handleUpdate(service)}
-                  className="bg-blue-500 text-white px-3 py-1 rounded mr-2"
+                  className="bg-purple-500 text-white px-3 py-1 rounded mr-2"
                 >
                   Update
                 </button>

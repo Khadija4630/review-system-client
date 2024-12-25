@@ -11,7 +11,7 @@ import SubscribeSection from '../Section/SubscribeSection';
 const HomePage = () => {
     const location = useLocation();
 
-    const hideComponents = ['/services','/services:id','my-services','/add-service', '/my-reviews','/login','/register'];
+    const hideComponents = ['/services','/services:id','/my-services','/add-service', '/my-reviews','/login','/register'];
     return (
         <div className=' max-w-7xl mx-auto'>
             <Navbar></Navbar>

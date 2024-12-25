@@ -42,7 +42,7 @@ const Banner = () => {
   ];
 
   return (
-    <div className="relative w-full h-[700px] rounded-xl overflow-hidden">
+    <div className="relative w-full h-[550px] rounded-xl overflow-hidden">
       {slides.map((slide, index) => (
         <motion.div
           key={index}

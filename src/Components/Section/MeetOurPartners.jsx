@@ -7,22 +7,22 @@ import Partner4 from '../../assets/partner4.png';
 const MeetOurPartners = () => {
   const partners = [
     {
-      name: 'Partnered With Google',
+      name: 'Tech Innovators',
       logo: Partner1,
       description: 'Providing excellent database services for user  experiences.',
     },
     {
-      name: 'Partnered With Apple',
+      name: 'Creative Solutions',
       logo: Partner2,
       description: 'Specialized in secure tech and fast cloud hosting solutions.',
     },
     {
-      name: 'Partnered With Microsoft',
+      name: 'Eco Services',
       logo: Partner3,
       description: 'Leading design services for a sleek tech and intuitive UI.',
     },
     {
-      name: 'Partnered With Amazon',
+      name: 'Eco Friendly',
       logo: Partner4,
       description: 'Offering top-notch e-commerce solutions for shopping.',
     }

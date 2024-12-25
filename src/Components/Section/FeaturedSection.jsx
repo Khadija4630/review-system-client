@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+import {toast } from 'react-toastify';
 
 const FeaturedServices = () => {
   const [services, setServices] = useState([]);
@@ -14,6 +15,7 @@ const FeaturedServices = () => {
       try {
         const response = await axios.get('http://localhost:5000/featured-services');
         setServices(response.data);
+        toast.success ('Featured Section fetched successfully');
       } catch (error) {
         console.error('Failed to fetch services:', error);
       }
