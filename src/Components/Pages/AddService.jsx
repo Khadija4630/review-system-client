@@ -3,6 +3,7 @@ import axios from "axios";
 import { AuthContext } from "../../Routes/Router";
 import {toast } from 'react-toastify';
 import { ClipLoader } from "react-spinners";
+import { Helmet} from "react-helmet-async";
 
 const AddService = () => {
   const { user } = useContext(AuthContext);
@@ -16,6 +17,7 @@ const AddService = () => {
     price: "",
   });
   const [successMessage, setSuccessMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -45,11 +47,17 @@ const AddService = () => {
           category: "",
           price: "",
         });
+        toast.success ("Service added successfully!");
+        setLoading (false);
       }
     } catch (error) {
       console.error("Error adding service:", error);
     }
   };
+
+  if (loading) return  <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+  <ClipLoader size={50} color={"#800080"} loading={true} />
+</div>;
 
   return (
     <div className="container mx-auto py-8 px-4">

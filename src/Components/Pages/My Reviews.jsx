@@ -3,6 +3,8 @@ import axios from "axios";
 import { motion } from "framer-motion";
 import { AuthContext } from "../../Routes/Router";
 import { ClipLoader } from "react-spinners";
+import {toast} from 'react-toastify';
+import { Helmet} from "react-helmet-async";
 
 const MyReviews = () => {
   const { user } = useContext(AuthContext);
@@ -15,7 +17,9 @@ const MyReviews = () => {
     const fetchReviews = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/my-reviews?userEmail=${user.email}`);
+        // const response = await axios.get (`http://localhost:5000/my-reviews`)
         setReviews(response.data);
+        toast.success ('Reviews fetched successfully')
         setLoading(false);
       } catch (error) {
         console.error("Error fetching reviews:", error);
@@ -28,24 +32,22 @@ const MyReviews = () => {
     }
   }, [user?.email]);
 
-  // Open Update Modal
   const handleUpdate = (review) => {
     setSelectedReview(review);
     setIsUpdateModalOpen(true);
   };
 
-  // Open Delete Modal
   const handleDelete = (review) => {
     setSelectedReview(review);
     setIsDeleteModalOpen(true);
   };
 
-  // Confirm Delete
   const confirmDelete = async () => {
     try {
       await axios.delete(`http://localhost:5000/my-reviews/${selectedReview._id}`);
       setReviews(reviews.filter((review) => review._id !== selectedReview._id));
       setIsDeleteModalOpen(false);
+      toast.success ('Review deleted successfully')
     } catch (error) {
       console.error("Error deleting review:", error);
     }

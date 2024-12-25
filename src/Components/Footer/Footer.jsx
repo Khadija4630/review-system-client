@@ -5,7 +5,7 @@ import {faFacebook ,faInstagram ,faTwitter} from '@fortawesome/free-brands-svg-i
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white py-8 px-3 rounded-2xl w-full">
+    <footer className="bg-base-300  py-8 px-3 rounded-2xl w-full">
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <div className="flex  space-x-4 ">
           <img
@@ -17,7 +17,7 @@ const Footer = () => {
            
           <h2 className="text-2xl md:text-4xl font-bold mb-4 ">Service Review System</h2>
           <p className="text-gray-400 mb-4">
-          Service Review System is your trusted platform for discovering, reviewing, and sharing experiences about various services. Whether you're looking for detailed insights or want to leave your feedback, we're here to help you make informed decisions. Join our community and contribute to a network of reliable service reviews!
+          Service Review System is your trusted platform for discovering, reviewing, and sharing experiences about various services. 
           </p>
         </div>
         </div>
@@ -72,7 +72,7 @@ const Footer = () => {
             </ul>
             </div>
       </div>
-      <div className="divider  bg-gray-700 rounded-2xl"></div>
+      <div className="divider rounded-2xl"></div>
       <p className="text-gray-500 text-lg text-center mt-3">&copy; {new Date().getFullYear()} Service Review System. All rights reserved.</p>
     </footer>
     

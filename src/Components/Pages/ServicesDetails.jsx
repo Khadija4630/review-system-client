@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar, faStarHalfAlt} from '@fortawesome/free-solid-svg-icons';
 import { ClipLoader } from "react-spinners";
 import { toast } from 'react-toastify';
+import { Helmet} from "react-helmet-async";
 
 const ServicesDetails = () => {
   const { id } = useParams();
@@ -45,6 +46,7 @@ const ServicesDetails = () => {
         userPhoto: user.photo,
         serviceId: id,
         postedDate: new Date(),
+        userEmail:user.email,
       };
       await axios.post("http://localhost:5000/reviews", reviewData, {
         // headers: { Authorization: `Bearer ${user.token}` },

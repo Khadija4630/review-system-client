@@ -5,6 +5,7 @@ import { AuthContext } from "../../Routes/Router";
 import UpdateModal from "../Modals/UpdateModal";
 import {toast} from 'react-toastify';
 import { ClipLoader } from "react-spinners";
+import { Helmet} from "react-helmet-async";
 
 const MyServices = () => {
   const { user } = useContext(AuthContext);
@@ -18,7 +19,8 @@ const MyServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/my-services?email=${user.email}`, {withCredentials:true} );
+        const response = await axios.get(`http://localhost:5000/my-services`, {withCredentials:true} );
+        setServices(response.data);
         setServices(response.data);
         setLoading (false);
       } catch (error) {
@@ -52,7 +54,7 @@ const MyServices = () => {
       console.error("Error deleting service:", error);
     }
   };
-  
+
  if (loading) return  <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
    <ClipLoader size={50} color={"#800080"} loading={true} />
  </div>;
@@ -105,7 +107,6 @@ const MyServices = () => {
         </tbody>
       </table>
 
-      {/* Update Modal */}
       {isUpdateModalOpen && (
         <UpdateModal
           service={selectedService}
@@ -118,7 +119,6 @@ const MyServices = () => {
         />
       )}
 
-      {/* Delete Modal */}
       {isDeleteModalOpen && (
         <motion.div
           initial={{ opacity: 0 }}

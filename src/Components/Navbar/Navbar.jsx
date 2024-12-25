@@ -16,29 +16,19 @@ const Navbar = () => {
             localStorage.removeItem("authToken");
             setUser(null); 
             toast.success("Logged out successfully");
-            navigate("/login");
+            navigate("/");
           }
   
       } catch (error) {
         console.error("Logout failed:", error);
       }
     };
-  
-    const handleThemeToggle = (event) => {
-      const isChecked = event.target.checked;
-      if (isChecked) {
-        document.documentElement.setAttribute("data-theme", "dark");
-      } else {
-        document.documentElement.setAttribute("data-theme", "light");
-      }
-    };
-  
 
   const Links = (
     <>
       <NavLink to="/" className="block text-center text-lg lg:mx-4 mx-2  hover:text-purple-500">Home</NavLink>
       <NavLink to="/services" className="block text-center text-lg lg:mx-4 mx-2  hover:text-purple-500">Services</NavLink>
-      <NavLink to="/my-services " className="block text-center text-lg lg:mx-4 mx-2  hover:text-purple-500">My Services</NavLink>
+      <NavLink to="/my-services" className="block text-center text-lg lg:mx-4 mx-2  hover:text-purple-500">My Services</NavLink>
     </>
   );
 

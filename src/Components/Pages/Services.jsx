@@ -2,7 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-// import { Spinner } from '@chakra-ui/react';
+import { Helmet} from "react-helmet-async";
+import { toast } from 'react-toastify';
+import { ClipLoader } from "react-spinners";
 
 
 const Services = () => {
@@ -13,18 +15,23 @@ const Services = () => {
 
   useEffect(() => {
     const fetchServices = async () => {
-      setLoading(true);
       try {
         const response = await axios.get(`http://localhost:5000/services`);
         setServices(response.data);
+        toast.success ('Services fetched successfully');
       } catch (error) {
         console.error('Error fetching services:', error);
-      } finally {
+      } finally{
         setLoading(false);
       }
+    
     };
     fetchServices();
   }, []);
+
+if (loading) return  <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
+  <ClipLoader size={50} color={"#800080"} loading={true} />
+</div>;   
 
   return (
     <div className="p-6">
@@ -32,11 +39,7 @@ const Services = () => {
         <title>Services | Review System</title>
       </Helmet>
       <h2 className="text-center font-bold text-4xl mt-5 mb-8">All Services</h2>
-      {/* {loading ? (
-        <div className="flex justify-center items-center h-64">
-          <Spinner size="xl" color="purple.500" />
-        </div>
-      ) : ( */}
+
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {services.map((service) => (
             <motion.div
