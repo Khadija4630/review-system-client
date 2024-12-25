@@ -48,9 +48,8 @@ const ServicesDetails = () => {
         postedDate: new Date(),
         userEmail:user.email,
       };
-      await axios.post("http://localhost:5000/reviews", reviewData, {
-        // headers: { Authorization: `Bearer ${user.token}` },
-      });
+      await axios.post("http://localhost:5000/reviews", reviewData,
+       {withCredentials:true });
       setReviews((prev) => [...prev, reviewData]);
       setNewReview("");
       setRating(0);

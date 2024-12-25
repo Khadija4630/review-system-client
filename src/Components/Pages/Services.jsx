@@ -11,6 +11,9 @@ const Services = () => {
   const [services, setServices] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+  const [searchKeyword, setSearchKeyword] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
 
   useEffect(() => {
@@ -29,6 +32,34 @@ const Services = () => {
     fetchServices();
   }, []);
 
+  const handleSearch = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `http://localhost:5000/search-services?keyword=${searchKeyword}`
+      );
+      setServices(response.data);
+    } catch (error) {
+      console.error("Error searching services:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleFilter = async (category) => {
+    try {
+      setLoading(true);
+      const response = await axios.get(
+        `http://localhost:5000/filter-services?category=${category}`
+      );
+      setServices(response.data);
+    } catch (error) {
+      console.error("Error filtering services:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
 if (loading) return  <div style={{ display: "flex", justifyContent: "center", marginTop: "50px" }}>
   <ClipLoader size={50} color={"#800080"} loading={true} />
 </div>;   
@@ -39,6 +70,39 @@ if (loading) return  <div style={{ display: "flex", justifyContent: "center", ma
         <title>Services | Review System</title>
       </Helmet>
       <h2 className="text-center font-bold text-4xl mt-5 mb-8">All Services</h2>
+      <div className="flex justify-center gap-4 mb-6">
+        <input
+          type="text"
+          placeholder="Search by keyword..."
+          value={searchKeyword}
+          onChange={(e) => setSearchKeyword(e.target.value)}
+          className="border p-2 rounded w-1/2"
+        />
+        <button
+          className="bg-purple-500 text-white px-4 py-2 rounded"
+          onClick={handleSearch}
+        >
+          Search
+        </button>
+      </div>
+
+      <div className="flex justify-center gap-4 mb-6">
+        <select
+          value={selectedCategory}
+          onChange={(e) => {
+            setSelectedCategory(e.target.value);
+            handleFilter(e.target.value);
+          }}
+          className="border p-2 rounded"
+        >
+          <option value="">All Categories</option>
+          {categories.map((category, index) => (
+            <option key={index} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {services.map((service) => (
@@ -61,23 +125,6 @@ if (loading) return  <div style={{ display: "flex", justifyContent: "center", ma
             </motion.div>
           ))}
         </div>
-      {/* )} */}
-      {/* <div className="flex justify-center mt-8">
-        <button
-          className="px-4 py-2 mx-1 bg-purple-500 text-white rounded"
-          disabled={currentPage === 1}
-          onClick={() => setCurrentPage((prev) => prev - 1)}
-        >
-          Previous
-        </button>
-        <button
-          className="px-4 py-2 mx-1 bg-purple-500 text-white rounded"
-          disabled={currentPage === totalPages}
-          onClick={() => setCurrentPage((prev) => prev + 1)}
-        >
-          Next
-        </button>
-      </div> */}
     </div>
   );
 };
