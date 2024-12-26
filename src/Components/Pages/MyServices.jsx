@@ -19,7 +19,7 @@ const MyServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/my-services`, {withCredentials:true} );
+        const response = await axios.get(`https://review-system-client-11.web.app/my-services`, {withCredentials:true} );
         setServices(response.data);
         setLoading (false);
         toast.success(' My Services fetched successfully');
@@ -46,7 +46,7 @@ const MyServices = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/my-services/${selectedService._id}`);
+      await axios.delete(`https://review-system-client-11.web.app/my-services/${selectedService._id}`);
       setServices(services.filter((service) => service._id !== selectedService._id));
       setIsDeleteModalOpen(false);
       toast.success('Service deleted successfully', {position: toast.POSITION.TOP_CENTER});

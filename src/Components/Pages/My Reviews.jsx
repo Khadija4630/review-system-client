@@ -16,7 +16,7 @@ const MyReviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/my-reviews`);
+        const response = await axios.get(`https://review-system-client-11.web.app/my-reviews`);
         setReviews(response.data);
         toast.success ('Reviews fetched successfully')
         setLoading(false);
@@ -43,7 +43,7 @@ const MyReviews = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`http://localhost:5000/my-reviews/${selectedReview._id}`);
+      await axios.delete(`https://review-system-client-11.web.app/my-reviews/${selectedReview._id}`);
       setReviews(reviews.filter((review) => review._id !== selectedReview._id));
       setIsDeleteModalOpen(false);
       toast.success ('Review deleted successfully')
@@ -115,7 +115,7 @@ const MyReviews = () => {
                     rating: e.target.rating.value,
                   };
                   const response = await axios.put(
-                    `http://localhost:5000/my-reviews/${selectedReview._id}`,
+                    `https://review-system-client-11.web.app/my-reviews/${selectedReview._id}`,
                     updatedReview
                   );
                   setReviews((prev) =>

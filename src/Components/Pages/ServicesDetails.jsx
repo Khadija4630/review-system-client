@@ -27,12 +27,12 @@ const ServicesDetails = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:5000/services/${id}`
+          `https://review-system-client-11.web.app/services/${id}`
         );
         const serviceData = response.data;
         setService(serviceData);
         const reviewsResponse = await axios.get(
-          `http://localhost:5000/reviews/${id}`,
+          `https://review-system-client-11.web.app/reviews/${id}`,
           { withCredentials: true }
         );
         const { serviceReviews, categoryReviews } = reviewsResponse.data;
@@ -70,7 +70,7 @@ const ServicesDetails = () => {
         postedDate: new Date(),
         userEmail:user.email,
       };
-      await axios.post("http://localhost:5000/my-reviews", reviewData,
+      await axios.post("https://review-system-client-11.web.app/my-reviews", reviewData,
        {withCredentials:true });
       setReviews((prevReviews) => [...prevReviews, response.data.review]);
       setCategoryReviews((prevCategoryReviews) => [...prevCategoryReviews, response.data.review]);

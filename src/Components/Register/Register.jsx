@@ -39,7 +39,7 @@ const Register = () => {
     setErrors({});
 
     try {
-      const response = await axios.post('http://localhost:5000/register', formData, {
+      const response = await axios.post('https://review-system-client-11.web.app/register', formData, {
         withCredentials: true,
       });
       if (response.data.success) {

@@ -11,7 +11,7 @@ const Navbar = () => {
 
     const handleLogout = async() => {
       try{
-        const response = await axios.post("http://localhost:5000/logout", { withCredentials: true });
+        const response = await axios.post("https://review-system-client-11.web.app/logout", { withCredentials: true });
         if (response.data.success) {
             localStorage.removeItem("authToken");
             setUser(null); 

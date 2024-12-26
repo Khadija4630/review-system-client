@@ -13,7 +13,7 @@ const UpdateModal = ({ service, onClose, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`http://localhost:5000/my-services/${service._id}`, formData);
+      const response = await axios.put(`https://review-system-client-11.web.app/my-services/${service._id}`, formData);
       onUpdate(response.data); 
       onClose();
       toast.success('Service updated successfully');

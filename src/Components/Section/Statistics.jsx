@@ -14,9 +14,9 @@ const Statistics = () => {
     const fetchCounts = async () => {
       try {
         const [userRes, reviewRes, serviceRes] = await Promise.all([
-          axios.get("http://localhost:5000/counts/users"),
-          axios.get("http://localhost:5000/counts/reviews"),
-          axios.get("http://localhost:5000/counts/services"),
+          axios.get("https://review-system-client-11.web.app/counts/users"),
+          axios.get("https://review-system-client-11.web.app/counts/reviews"),
+          axios.get("https://review-system-client-11.web.app/counts/services"),
         ]);
 
         setUserCount(userRes.data.userCount);

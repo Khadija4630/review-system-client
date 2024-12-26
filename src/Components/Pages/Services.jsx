@@ -18,7 +18,7 @@ const Services = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/services`);
+        const response = await axios.get(`https://review-system-client-11.web.app/services`);
         const data = response.data;
         setFilteredServices (data);
         if (!toastShown) {
@@ -41,7 +41,7 @@ const Services = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `http://localhost:5000/search-services?keyword=${searchKeyword}`
+        `https://review-system-client-11.web.app/search-services?keyword=${searchKeyword}`
       );
       setFilteredServices(response.data);
     } catch (error) {

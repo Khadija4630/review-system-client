@@ -32,7 +32,7 @@ const CustomerReviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get('http://localhost:5000/customer-reviews'); 
+        const res = await axios.get('https://review-system-client-11.web.app/customer-reviews'); 
         setReviews(res.data);
         toast.success ('Customer Reviews fetched successfully!');
       } catch (error) {

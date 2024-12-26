@@ -34,7 +34,7 @@ const AddService = () => {
     };
 
     try {
-      const response = await axios.post("http://localhost:5000/add-service", serviceData);
+      const response = await axios.post("https://review-system-client-11.web.app/add-service", serviceData);
       if (response.status === 201) {
         setSuccessMessage("Service added successfully!");
         toast.success ("Service added successfully!");  

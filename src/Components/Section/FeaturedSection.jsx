@@ -13,7 +13,7 @@ const FeaturedServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/featured-services');
+        const response = await axios.get('https://review-system-client-11.web.app/featured-services');
         setServices(response.data);
         toast.success ('Featured Section fetched successfully');
       } catch (error) {
