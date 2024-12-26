@@ -8,15 +8,20 @@ import { faStar, faStarHalfAlt} from '@fortawesome/free-solid-svg-icons';
 import { ClipLoader } from "react-spinners";
 import { toast } from 'react-toastify';
 import { Helmet} from "react-helmet-async";
+import CountUp from "react-countup";
 
 const ServicesDetails = () => {
   const { id } = useParams();
   const [service, setService] = useState([]);
   const [reviews, setReviews] = useState([]);
+  const [categoryReviews, setCategoryReviews] = useState([]);
   const [newReview, setNewReview] = useState("");
   const [rating, setRating] = useState(0);
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
+  const [reviewCount, setReviewCount] = useState(0);
+
+
   useEffect(() => {
     const fetchServicesDetails = async () => {
       setLoading(true);
@@ -24,8 +29,21 @@ const ServicesDetails = () => {
         const response = await axios.get(
           `http://localhost:5000/services/${id}`
         );
-        setService(response.data);
-        toast.success ("Service details fetched successfully");
+        const serviceData = response.data;
+        setService(serviceData);
+        const reviewsResponse = await axios.get(
+          `http://localhost:5000/reviews/${id}`,
+          { withCredentials: true }
+        );
+        const { serviceReviews, categoryReviews } = reviewsResponse.data;
+        if (serviceReviews && categoryReviews) {
+          setReviews(serviceReviews);
+          setCategoryReviews(categoryReviews);
+          setReviewCount(serviceReviews.length);
+        } else {
+          console.error("Invalid data structure:", reviewsResponse.data);
+        }
+  toast.success ("Service details fetched successfully");
         setLoading(false);
       } catch (error) {
         console.error("Error fetching service details:", error);
@@ -38,6 +56,10 @@ const ServicesDetails = () => {
   }, [id]);
 
   const addReview = async () => {
+    if (!user) {
+      toast.error("You need to be logged in to add a review!");
+      return;
+    }
     try {
       const reviewData = {
         reviewText: newReview,
@@ -48,11 +70,13 @@ const ServicesDetails = () => {
         postedDate: new Date(),
         userEmail:user.email,
       };
-      await axios.post("http://localhost:5000/reviews", reviewData,
+      await axios.post("http://localhost:5000/my-reviews", reviewData,
        {withCredentials:true });
-      setReviews((prev) => [...prev, reviewData]);
+      setReviews((prevReviews) => [...prevReviews, response.data.review]);
+      setCategoryReviews((prevCategoryReviews) => [...prevCategoryReviews, response.data.review]);
       setNewReview("");
       setRating(0);
+      setReviewCount((prevCount) => prevCount + 1);
       toast.success("Review added successfully");
     } catch (error) {
       console.error("Error adding review:", error);
@@ -96,8 +120,10 @@ const { title, description, image, price, details, location, duration, ratings, 
         </p>
       </div>
        </div>
+       
      <div className="mb-8">
-        <h2 className="text-2xl font-bold">Reviews ({reviews.length})</h2>
+        <h2 className="text-2xl font-bold">Reviews
+        <CountUp start={0} end={reviewCount} duration={1} className="text-purple-500 ml-2" /></h2>
         {reviews.map((review, index) => (
           <div key={index} className="p-4 border rounded-lg my-4">
             <div className="flex items-center mb-2">
@@ -119,6 +145,23 @@ const { title, description, image, price, details, location, duration, ratings, 
           </div>
         ))}
       </div>
+      <div className="mb-8">
+        <h2 className="text-2xl font-bold">Reviews for {category} Category</h2>
+        {categoryReviews.map((review, index) => (
+          <div key={index} className=" grid grid-cols-1 md:grid-cols-2 ">
+           <div className="w-full p-4 border rounded-lg my-4"> <p className=" font-bold text-2xl text-center"> {review.serviceTitle}</p>
+            <p className="text-xl mb-2 mt-2 font-semibold text-center">{review.reviewMessage}</p>
+            <Rating
+              initialRating={review.rating}
+              readonly
+              fullSymbol={<FontAwesomeIcon icon={faStar} className="text-yellow-500 text-xl" />}
+              emptySymbol={<FontAwesomeIcon icon={faStarHalfAlt} className="text-yellow-300 text-xl " />}
+            />
+            <p className=" text-lg text-purple-500 text-end"> Posted by {review.author}</p></div>
+          </div>
+        ))}
+      </div>
+
       <div className="mb-8">
         <h2 className="text-2xl font-bold">Add a Review</h2>
         <textarea
