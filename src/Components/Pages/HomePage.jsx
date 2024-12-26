@@ -8,7 +8,7 @@ import FeaturedServices from "../Section/FeaturedSection";
 import ChooseUs from "../Section/ChooseUs";
 import CustomerReviews from "../Section/CustomerReviews";
 import SubscribeSection from "../Section/SubscribeSection";
-import CountUp from "../Section/CountUp";
+import Statistics from "../Section/Statistics";
 const HomePage = () => {
   const location = useLocation();
 
@@ -31,12 +31,12 @@ const HomePage = () => {
           <FeaturedServices></FeaturedServices>
           <CustomerReviews></CustomerReviews>
           <MeetOurPartners></MeetOurPartners>
-          <section className="stats bg-gray-100 py-10">
+          <section className="stats bg-gray-100 py-10 w-full">
             <div className="container mx-auto">
               <h2 className="text-3xl font-bold text-center mb-8">
                 Statistics
               </h2>
-              <CountUp />
+              <Statistics/>
             </div>
           </section>
           <ChooseUs></ChooseUs>

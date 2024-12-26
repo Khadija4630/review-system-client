@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import {toast} from 'react-toastify';
+import axios from 'axios';
 
 const UpdateModal = ({ service, onClose, onUpdate }) => {
   const [formData, setFormData] = useState({ ...service });
