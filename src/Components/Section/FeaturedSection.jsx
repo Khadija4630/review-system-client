@@ -24,7 +24,7 @@ const FeaturedServices = () => {
 
   return (
     <div >
-        <h2 className='text-center font-bold text-4xl mt-5 mb-8'> Featured Section</h2>
+        <h2 className='text-center font-bold text-4xl mt-6 mb-8'> Featured Section</h2>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
       {services.map((service) => (
         <motion.div key={service._id} className="card shadow-lg  rounded-lg p-3" whileHover={{ scale: 1.05 }}

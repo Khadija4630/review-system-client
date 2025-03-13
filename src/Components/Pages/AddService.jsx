@@ -64,7 +64,7 @@ const AddService = () => {
         <Helmet>
         <title>Add Service | Review System</title>
       </Helmet>
-      <h2 className="text-3xl font-bold text-center mb-6 mt-4">Add a New Service</h2>
+      <h2 className="text-3xl font-bold text-center mb-6 mt-8 md:mt-20 lg:mt-16">Add a New Service</h2>
       {successMessage && (
         <div className="text-green-500 bg-green-100 p-4 rounded mb-6">
           {successMessage}
