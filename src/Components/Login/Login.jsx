@@ -1,50 +1,92 @@
-import React, { useState,useContext, useEffect } from "react";
+import  { useContext, useEffect } from "react";
 import { auth} from "../../Firebase/firebase.init"; 
-import { signInWithPopup,GoogleAuthProvider, onAuthStateChanged } from "firebase/auth";
+import { signInWithPopup,GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import {ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { AuthContext } from "../../Routes/Router";
 import {Helmet} from "react-helmet-async";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const navigate = useNavigate();
     const location =useLocation();
   const { setUser } = useContext(AuthContext);
   const googleProvider = new GoogleAuthProvider();
+  const from = location.state?.from?.pathname || '/';
 
-  
-    const handleLogin = async (e) => {
-      e.preventDefault();
-  
-      try {
-        await signInWithEmailAndPassword(auth,email, password); 
-        const response = await axios.post("https://review-system-client-11.web.app/login", { email, password },{ withCredentials: true });
-        navigate("/"); 
-        if (response.data.success) {
-          localStorage.setItem("authToken", response.data.user);
-          toast.success("Login successful");
-        }
-      } catch (error) {
-        toast.error("Invalid email or password");
-      }
-    };
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+
+
+    if (!email || !password) {
+      toast.error("Please enter both email and password.");
+      return;
+    }
+    try {
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    const user = result.user;
+    console.log("Logged in user:",user); 
+    const res= await axios.post("https://review-system-11.vercel.app/jwt", { email: user.email },{ withCredentials:true, headers: {
+      "Content-Type": "application/json",
+
+    } } );
+    console.log(res.data);
+    const token = result.user.accessToken;
+    setUser({user,token,
+       email: user.email,
+      displayName: user.displayName,
+      photoURL: user.photoURL
+
+    });
+    toast.success("Login successful!");
+    navigate(from, { replace: true });
+  } catch (error) {
+    console.error("Login error:", error.message);
+    if (error.response) {
+      toast.error(error.response.data.message || "Login failed.");
+    } else {
+      toast.error("Login failed. Please try again.");
+    }
+  }
+};
+//   const handleLogin = e => {
+//     e.preventDefault();
+//     const form = e.target;
+//     const email = form.email.value;
+//     const password = form.password.value;
+//     console.log(email, password);
+
+//     setUser(email, password)
+//         .then(result => {
+//             console.log('log in ', result.user)
+//             navigate(from)
+//             toast.success("Login successful");
+//         })
+//         .catch(error => {
+//             console.log(error);
+//         })
+
+// }
+
   
     const handleGoogleLogin = async (e) => {
         try {
           const userCredential = await signInWithPopup(auth, googleProvider);
           const user = userCredential.user;
+         await axios.post("https://review-system-11.vercel.app/jwt", { email: user.email },{ withCredentials:true} );
           setUser ({
             email: user.email,
             displayName: user.displayName,
             photoURL: user.photoURL,
+            token
           });
           toast.success("Google Login Is Successful");
           toast.success(`Welcome, ${user.displayName || "User"}!`);
-          navigate("/");
+          navigate(from, { replace: true });
         } catch (error) {
           toast.error(error.message  || "Google Login Failed");
         }
@@ -66,7 +108,7 @@ const Login = () => {
         return () => unsubscribe(); 
     }, [navigate, setUser,location]);
   
-    return (
+    return  ( 
      <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-500 via-pink-500 to-purple-600">
         <Helmet>
         <title>Login | Review System</title>
@@ -78,8 +120,7 @@ const Login = () => {
             <div>
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                name="email"
                 placeholder="Email"
                 required
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
@@ -88,8 +129,7 @@ const Login = () => {
             <div>
               <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+               name ="password"
                 placeholder="Password"
                 required
                 className="w-full p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"

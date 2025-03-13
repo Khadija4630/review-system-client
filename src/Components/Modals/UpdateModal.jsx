@@ -13,12 +13,13 @@ const UpdateModal = ({ service, onClose, onUpdate }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.put(`https://review-system-client-11.web.app/my-services/${service._id}`, formData);
+      const response = await axios.put(`https://review-system-11.vercel.app/my-services/${service._id}`, formData , { withCredentials:true, headers: {'Content-Type':'application/json' }}); 
       onUpdate(response.data); 
-      onClose();
       toast.success('Service updated successfully');
+      onClose();
     } catch (error) {
       console.error("Error updating service:", error);
+      
     }
   };
 

@@ -20,6 +20,7 @@ const ServicesDetails = () => {
   const [loading, setLoading] = useState(true);
   const { user } = useContext(AuthContext);
   const [reviewCount, setReviewCount] = useState(0);
+  const [categoryReviewCount, setCategoryReviewCount] = useState(0);
 
 
   useEffect(() => {
@@ -27,12 +28,12 @@ const ServicesDetails = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          `https://review-system-client-11.web.app/services/${id}`
+          `https://review-system-11.vercel.app/services/${id}`, { withCredentials: true }
         );
         const serviceData = response.data;
         setService(serviceData);
         const reviewsResponse = await axios.get(
-          `https://review-system-client-11.web.app/reviews/${id}`,
+          `https://review-system-11.vercel.app/reviews/${id}`,
           { withCredentials: true }
         );
         const { serviceReviews, categoryReviews } = reviewsResponse.data;
@@ -40,6 +41,7 @@ const ServicesDetails = () => {
           setReviews(serviceReviews);
           setCategoryReviews(categoryReviews);
           setReviewCount(serviceReviews.length);
+          setCategoryReviewCount(categoryReviews.length);
         } else {
           console.error("Invalid data structure:", reviewsResponse.data);
         }
@@ -64,19 +66,26 @@ const ServicesDetails = () => {
       const reviewData = {
         reviewText: newReview,
         rating,
-        userName: user.name,
-        userPhoto: user.photo,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
         serviceId: id,
         postedDate: new Date(),
         userEmail:user.email,
       };
-      await axios.post("https://review-system-client-11.web.app/my-reviews", reviewData,
-       {withCredentials:true });
-      setReviews((prevReviews) => [...prevReviews, response.data.review]);
-      setCategoryReviews((prevCategoryReviews) => [...prevCategoryReviews, response.data.review]);
+     const response= await axios.post("https://review-system-11.vercel.app/my-reviews", reviewData,
+       {withCredentials:true, headers: { 'Content-Type': 'application/json'} });
+       const newReviewData = response.data.review;
+         setReviews((prevReviews) => [...prevReviews, newReviewData]);
+         setCategoryReviews((prevCategoryReviews) => [
+           ...prevCategoryReviews,
+           newReviewData,
+         ]);
+   
+         setReviewCount((prevCount) => prevCount + 1);
+         setCategoryReviewCount((prevCount) => prevCount + 1); 
       setNewReview("");
       setRating(0);
-      setReviewCount((prevCount) => prevCount + 1);
+     
       toast.success("Review added successfully");
     } catch (error) {
       console.error("Error adding review:", error);
@@ -122,42 +131,48 @@ const { title, description, image, price, details, location, duration, ratings, 
        </div>
        
      <div className="mb-8">
-        <h2 className="text-2xl font-bold">Reviews
+        <h2 className="text-2xl font-bold">New Added Reviews
         <CountUp start={0} end={reviewCount} duration={1} className="text-purple-500 ml-2" /></h2>
-        {reviews.map((review, index) => (
+        {reviews?.map((review, index) => (
           <div key={index} className="p-4 border rounded-lg my-4">
             <div className="flex items-center mb-2">
-              <img
-                src={review.userPhoto}
-                alt={review.userName}
-                className="w-10 h-10 rounded-full mr-4"
-              />
-              <p className="font-semibold">{review.userName}</p>
+
+
+            { user?.photoURL &&(
+  <img src={user.photoURL} alt={user.displayName} className="w-10 h-10 rounded-full" />
+
+)
+}
+
+    
             </div>
-            <p>{review.reviewText}</p>
+  <p className="font-semibold">{user?.displayName}</p>
+ 
+            <p>{review?.reviewText}</p>
             <p className="text-yellow-500"  style={{ fontSize: '2rem,pr-2' }}>
-              <Rating initialRating={review.rating} readonly  fullSymbol= {<FontAwesomeIcon icon={faStar} className="text-yellow-500" />}
+              <Rating initialRating={review?.rating} readonly  fullSymbol= {<FontAwesomeIcon icon={faStar} className="text-yellow-500" />}
           emptySymbol= {<FontAwesomeIcon icon ={faStarHalfAlt} className="text-yellow-300"/>} />
             </p>
             <p className="text-gray-500 text-sm">
-              {new Date(review.postedDate).toLocaleString()}
+              {new Date(review?.postedDate).toLocaleString()}
             </p>
           </div>
         ))}
       </div>
       <div className="mb-8">
         <h2 className="text-2xl font-bold">Reviews for {category} Category</h2>
-        {categoryReviews.map((review, index) => (
+        <p className="text-lg font-semibold text-purple-500">Total reviews for {category}: {categoryReviewCount}</p>
+        {categoryReviews?.map((review, index) => (
           <div key={index} className=" grid grid-cols-1 md:grid-cols-2 ">
-           <div className="w-full p-4 border rounded-lg my-4"> <p className=" font-bold text-2xl text-center"> {review.serviceTitle}</p>
-            <p className="text-xl mb-2 mt-2 font-semibold text-center">{review.reviewMessage}</p>
+           <div className="w-full p-4 border rounded-lg my-4"> <p className=" font-bold text-2xl text-center"> {review?.serviceTitle}</p>
+            <p className="text-xl mb-2 mt-2 font-semibold text-center">{review?.reviewMessage}</p>
             <Rating
-              initialRating={review.rating}
+              initialRating={review?.rating}
               readonly
               fullSymbol={<FontAwesomeIcon icon={faStar} className="text-yellow-500 text-xl" />}
               emptySymbol={<FontAwesomeIcon icon={faStarHalfAlt} className="text-yellow-300 text-xl " />}
             />
-            <p className=" text-lg text-purple-500 text-end"> Posted by {review.author}</p></div>
+            <p className=" text-lg text-purple-500 text-end"> Posted by {review?.author}</p></div>
           </div>
         ))}
       </div>

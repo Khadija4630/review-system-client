@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import {Helmet } from 'react-helmet-async';
+import { createUserWithEmailAndPassword,updateProfile } from 'firebase/auth';
+import { auth } from '../../Firebase/firebase.init';
+
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -39,14 +42,28 @@ const Register = () => {
     setErrors({});
 
     try {
-      const response = await axios.post('https://review-system-client-11.web.app/register', formData, {
+      const userCredential = await createUserWithEmailAndPassword(auth, formData.email, formData.password);
+    const user = userCredential.user;
+    await updateProfile(user, {
+      displayName: formData.name || user.displayName,
+      photoURL: formData.photoURL || user.photoURL,
+    });
+      const response = await axios.post('https://review-system-11.vercel.app/register',{ ...formData, firebaseUserID: user.uid },{
         withCredentials: true,
+        firebaseUserID: user.uid,
+        headers : { 
+          'Content-Type': 'application/json',
+        }
       });
-      if (response.data.success) {
+      navigate ('/login');
+      if (response?.data?.success) {
         toast.success('Registered successfully!');
-        navigate('/login');
+        navigate ('/login');
       }
     } catch (error) {
+      if (error.response && error.response.status === 400) {
+        alert(error.response.data.error);
+      }
       console.error('Registration error:', error);
       toast.error('Failed to register. Please try again.');
     }

@@ -18,14 +18,13 @@ const Services = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get(`https://review-system-client-11.web.app/services`);
+        const response = await axios.get(`https://review-system-11.vercel.app/services`);
         const data = response.data;
         setFilteredServices (data);
-        if (!toastShown) {
+        setServices(data);
         toast.success ('Services fetched successfully');
-        setToastShown(true);
-        }
-        const uniqueCategories = Array.from(new Set(data.map(service => service.category)));
+          setFilteredServices(data);
+        const uniqueCategories = Array.from(new Set(data.map(service => service.category) .filter(Boolean)));
         setCategories(uniqueCategories);
       } catch (error) {
         console.error('Error fetching services:', error);
@@ -41,7 +40,7 @@ const Services = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `https://review-system-client-11.web.app/search-services?keyword=${searchKeyword}`
+        `https://review-system-11.vercel.app/search-services?keyword=${searchKeyword}`
       );
       setFilteredServices(response.data);
     } catch (error) {
@@ -66,11 +65,11 @@ if (loading) return  <div style={{ display: "flex", justifyContent: "center", ma
 </div>;   
 
   return (
-    <div className="p-6  ">
+    <div className="px-4 py-8 ">
       <Helmet>
         <title>Services | Review System</title>
       </Helmet>
-      <h2 className="text-center font-bold text-4xl mt-5 mb-8">All Services</h2>
+      <h2 className="text-center font-bold text-4xl mt-8 md:mt-20 lg:mt-16  mb-6">All Services</h2>
       <div className="flex justify-center gap-4 mb-6">
         <input
           type="text"

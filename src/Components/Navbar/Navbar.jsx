@@ -11,12 +11,12 @@ const Navbar = () => {
 
     const handleLogout = async() => {
       try{
-        const response = await axios.post("https://review-system-client-11.web.app/logout", { withCredentials: true });
+        const response = await axios.post("https://review-system-11.vercel.app/logout", { withCredentials: true });
         if (response.data.success) {
             localStorage.removeItem("authToken");
             setUser(null); 
             toast.success("Logged out successfully");
-            navigate("/");
+            navigate("/login");
           }
   
       } catch (error) {
@@ -39,7 +39,7 @@ const Navbar = () => {
     </>
   );
   return (
-    <div className="navbar">
+    <div className="navbar fixed top-0 left-0 w-full bg-base-100 shadow-lg z-50">
       <div className="navbar-start md:hidden flex md:items-center ">
         <div className="dropdown">
           <label tabIndex={0} role="button" className="btn btn-ghost">

@@ -1,5 +1,3 @@
-
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { motion } from 'framer-motion';
@@ -13,7 +11,7 @@ const FeaturedServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get('https://review-system-client-11.web.app/featured-services');
+      const response= await axios.get(('https://review-system-11.vercel.app/featured-services' ));
         setServices(response.data);
         toast.success ('Featured Section fetched successfully');
       } catch (error) {

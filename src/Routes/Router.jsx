@@ -1,6 +1,7 @@
 import { onAuthStateChanged, signOut} from "firebase/auth";
 import React, { createContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.init";
+import axios from "axios";
 
 export const AuthContext = createContext(null);
 
@@ -16,7 +17,11 @@ const Router = ({ children }) => {
           displayName: currentUser.displayName,
           photoURL: currentUser.photoURL,
         });
-        console.log("User detected:", currentUser);
+        console.log("User detected:", currentUser?.email);
+        axios.post ("https://review-system-11.vercel.app/jwt", { email: currentUser.email }, { withCredentials: true , headers: { 'Content-Type': 'application/json' } })
+      .then((response) => {
+        console.log(response.data);
+      })
       } else {
         setUser(null);
       }

@@ -21,6 +21,8 @@ import { HelmetProvider } from "react-helmet-async";
 import NotFound from './Components/PublicPages/NotFound';
 import AboutUs from './Components/PublicPages/AboutUs';
 import ContactUs from './Components/PublicPages/ContactUs';
+import FeaturedServices from './Components/Section/FeaturedSection';
+import CustomerReviews from './Components/Section/CustomerReviews';
 
 const router = createBrowserRouter([
 
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
       {
         path: "/services",
         element: <Services></Services>,
+        },
+      {
+        path: "/featured-services",
+        element:<FeaturedServices></FeaturedServices>,
+        },
+      {
+        path: "/customer-reviews",
+        element:<CustomerReviews></CustomerReviews>,
         },
       {
         path: "/services/:id",

@@ -16,7 +16,7 @@ const MyReviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const response = await axios.get(`https://review-system-client-11.web.app/my-reviews`);
+        const response = await axios.get(`https://review-system-11.vercel.app/my-reviews`, { withCredentials: true, headers: { "Content-Type": "application/json" } });
         setReviews(response.data);
         toast.success ('Reviews fetched successfully')
         setLoading(false);
@@ -43,7 +43,7 @@ const MyReviews = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`https://review-system-client-11.web.app/my-reviews/${selectedReview._id}`);
+      await axios.delete(`https://review-system-11.vercel.app/my-reviews/${selectedReview._id}`, { withCredentials: true , headers: {"Content-Type" :"application/json" }  });
       setReviews(reviews.filter((review) => review._id !== selectedReview._id));
       setIsDeleteModalOpen(false);
       toast.success ('Review deleted successfully')
@@ -61,7 +61,7 @@ const MyReviews = () => {
         <Helmet>
         <title>My Reviews | Review System</title>
       </Helmet>
-      <h2 className="text-3xl font-bold text-center mb-6">My Reviews</h2>
+      <h2 className="text-3xl font-bold text-center mb-6 mt-8 md:mt-20 lg:mt-16">My Reviews</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {reviews.map((review) => (
@@ -72,7 +72,7 @@ const MyReviews = () => {
             animate={{ opacity: 1 }}
           >
             <h3 className="text-xl font-semibold mb-2">{review.serviceTitle}</h3>
-            <p className="text-gray-600 mb-4 flex-grow">{review.reviewMessage}</p>
+            <p className="text-gray-600 mb-4 flex-grow">{review.reviewMessage|| review.reviewText}</p>
             <div className="flex justify-between items-center border-t pt-4 mt-4">
               <span className="text-yellow-500 flex items-center text-lg">⭐ {review.rating}</span>
               <div className="flex space-x-2">
@@ -91,7 +91,7 @@ const MyReviews = () => {
               </div>
             </div>
             <div className="flex justify-end">
-        <p className=" font-bold text-sm">{`- ${review.author}`}</p>
+        <p className=" font-bold text-sm">{`- ${review.author || review.userName}`}</p>
       </div>
           </motion.div>
         ))}
@@ -111,19 +111,22 @@ const MyReviews = () => {
                 try {
                   const updatedReview = {
                     ...selectedReview,
-                    text: e.target.text.value,
-                    rating: e.target.rating.value,
+                    reviewMessage: e.target.text.value, 
+        rating: e.target.rating.value,
                   };
                   const response = await axios.put(
-                    `https://review-system-client-11.web.app/my-reviews/${selectedReview._id}`,
-                    updatedReview
+                    `https://review-system-11.vercel.app/my-reviews/${selectedReview._id}`,
+                    updatedReview,
+                    { withCredentials: true, headers: { "Content-Type": "application/json" } }
                   );
-                  setReviews((prev) =>
-                    prev.map((review) =>
+                  setReviews((prevReviews) =>
+                    prevReviews.map((review) =>
                       review._id === response.data._id ? response.data : review
                     )
                   );
+                  toast.success("Review updated successfully!");
                   setIsUpdateModalOpen(false);
+
                 } catch (error) {
                   console.error("Error updating review:", error);
                 }

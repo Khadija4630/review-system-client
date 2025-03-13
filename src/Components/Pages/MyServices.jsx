@@ -19,7 +19,9 @@ const MyServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await axios.get(`https://review-system-client-11.web.app/my-services`, {withCredentials:true} );
+        const response = await axios.get(`https://review-system-11.vercel.app/my-services`, {withCredentials:true , headers :{
+          'Content-Type': 'application/json'
+        }} );
         setServices(response.data);
         setLoading (false);
         toast.success(' My Services fetched successfully');
@@ -39,6 +41,34 @@ const MyServices = () => {
     setIsUpdateModalOpen(true);
   };
 
+  const updateService = async (updatedService) => {
+    try {
+      
+      const response = await axios.put(
+        `https://review-system-11.vercel.app/my-services/${selectedService._id}`,
+        updatedService,
+        {
+          withCredentials: true,
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        }
+      );
+  
+      setServices((prev) =>
+        prev.map((service) =>
+          service._id === response.data._id ? response.data : service
+        )
+      );
+      toast.success('Service updated successfully');
+      setIsUpdateModalOpen(false);
+    } catch (error) {
+      console.error('Error updating service:', error);
+      toast.error('Failed to update the service');
+    }
+  };
+
+
   const handleDelete = (service) => {
     setSelectedService(service);
     setIsDeleteModalOpen(true);
@@ -46,10 +76,11 @@ const MyServices = () => {
 
   const confirmDelete = async () => {
     try {
-      await axios.delete(`https://review-system-client-11.web.app/my-services/${selectedService._id}`);
+     
+      await axios.delete(`https://review-system-11.vercel.app/my-services/${selectedService._id}`,{ withCredentials:true, headers: { 'Content-Type': 'application/json'} });
       setServices(services.filter((service) => service._id !== selectedService._id));
       setIsDeleteModalOpen(false);
-      toast.success('Service deleted successfully', {position: toast.POSITION.TOP_CENTER});
+      toast.success('Service deleted successfully');
     } catch (error) {
       console.error("Error deleting service:", error);
     }
@@ -64,7 +95,7 @@ const MyServices = () => {
         <Helmet>
         <title>My Services | Review System</title>
       </Helmet>
-      <h2 className="text-3xl font-bold text-center mb-6">My Services</h2>
+      <h2 className="text-3xl font-bold text-center mb-6 mt-8 md:mt-20 lg:mt-16">My Services</h2>
       <input
         type="text"
         placeholder="Search services..."
@@ -111,11 +142,13 @@ const MyServices = () => {
         <UpdateModal
           service={selectedService}
           onClose={() => setIsUpdateModalOpen(false)}
-          onUpdate={(updatedService) => {
-            setServices((prev) =>
-              prev.map((service) => (service._id === updatedService._id ? updatedService : service))
-            );
-          }}
+          onUpdate={(updateService) }
+          // => {
+          //   setServices((prev) =>
+          //     prev.map((service) => (service._id === updatedService._id ? updatedService : service))
+          //   );
+          //   setIsUpdateModalOpen(false);
+          // }
         />
       )}
 

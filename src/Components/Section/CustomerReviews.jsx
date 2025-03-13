@@ -32,7 +32,7 @@ const CustomerReviews = () => {
   useEffect(() => {
     const fetchReviews = async () => {
       try {
-        const res = await axios.get('https://review-system-client-11.web.app/customer-reviews'); 
+        const res = await axios.get('https://review-system-11.vercel.app/customer-reviews'); 
         setReviews(res.data);
         toast.success ('Customer Reviews fetched successfully!');
       } catch (error) {
@@ -73,7 +73,7 @@ const CustomerReviews = () => {
               className="p-6 bg-purple-50 rounded-lg shadow"
               whileHover={{ scale: 1.05 }}
             >
-              <p className="text-gray-600 italic mb-4">{`"${review.reviewMessage}"`}</p>
+              <p className="text-gray-600 italic mb-4">{`"${review.reviewMessage ||review.reviewText}"`}</p>
               <p className="text-gray-600 italic mb-4">{`"${review.serviceTitle}"`}</p>
               <div className="flex items-center mb-4">
         <span className="text-gray-600 font-medium mr-2">Rating:</span>

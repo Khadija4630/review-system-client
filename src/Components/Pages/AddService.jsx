@@ -34,8 +34,8 @@ const AddService = () => {
     };
 
     try {
-      const response = await axios.post("https://review-system-client-11.web.app/add-service", serviceData);
-      if (response.status === 201) {
+      const response = await axios.post("https://review-system-11.vercel.app/add-service", serviceData ,{ withCredentials:true, headers: { 'Content-Type': 'application/json'}});
+    if (response.status === 201) {
         setSuccessMessage("Service added successfully!");
         toast.success ("Service added successfully!");  
         setFormData({
@@ -64,7 +64,7 @@ const AddService = () => {
         <Helmet>
         <title>Add Service | Review System</title>
       </Helmet>
-      <h2 className="text-3xl font-bold text-center mb-6">Add a New Service</h2>
+      <h2 className="text-3xl font-bold text-center mb-6 mt-4">Add a New Service</h2>
       {successMessage && (
         <div className="text-green-500 bg-green-100 p-4 rounded mb-6">
           {successMessage}
