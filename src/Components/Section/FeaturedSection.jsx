@@ -13,7 +13,7 @@ const FeaturedServices = () => {
       try {
       const response= await axios.get(('https://review-system-11.vercel.app/featured-services' ));
         setServices(response.data);
-        toast.success ('Featured Section fetched successfully');
+        // toast.success ('Featured Section fetched successfully');
       } catch (error) {
         console.error('Failed to fetch services:', error);
       }
@@ -23,7 +23,7 @@ const FeaturedServices = () => {
   }, []);
 
   return (
-    <div >
+    <div className='mt-6' >
         <h2 className='text-center font-bold text-4xl mt-6 mb-8'> Featured Section</h2>
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
       {services.map((service) => (

@@ -18,7 +18,7 @@ const MyReviews = () => {
       try {
         const response = await axios.get(`https://review-system-11.vercel.app/my-reviews`, { withCredentials: true, headers: { "Content-Type": "application/json" } });
         setReviews(response.data);
-        toast.success ('Reviews fetched successfully')
+        // toast.success ('Reviews fetched successfully')
         setLoading(false);
       } catch (error) {
         console.error("Error fetching reviews:", error);

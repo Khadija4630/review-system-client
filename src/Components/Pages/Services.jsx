@@ -22,7 +22,7 @@ const Services = () => {
         const data = response.data;
         setFilteredServices (data);
         setServices(data);
-        toast.success ('Services fetched successfully');
+        // toast.success ('Services fetched successfully');
           setFilteredServices(data);
         const uniqueCategories = Array.from(new Set(data.map(service => service.category) .filter(Boolean)));
         setCategories(uniqueCategories);

@@ -34,7 +34,7 @@ const CustomerReviews = () => {
       try {
         const res = await axios.get('https://review-system-11.vercel.app/customer-reviews'); 
         setReviews(res.data);
-        toast.success ('Customer Reviews fetched successfully!');
+        // toast.success ('Customer Reviews fetched successfully!');
       } catch (error) {
         console.error('Error fetching reviews:', error);
         setReviews(staticReviews);

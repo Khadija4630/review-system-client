@@ -45,7 +45,7 @@ const ServicesDetails = () => {
         } else {
           console.error("Invalid data structure:", reviewsResponse.data);
         }
-  toast.success ("Service details fetched successfully");
+  // toast.success ("Service details fetched successfully");
         setLoading(false);
       } catch (error) {
         console.error("Error fetching service details:", error);

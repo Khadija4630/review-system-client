@@ -16,7 +16,7 @@ const Footer = () => {
         <div>
            
           <h2 className="text-2xl md:text-4xl font-bold mb-4 ">Service Review System</h2>
-          <p className="text-gray-400 mb-4">
+          <p className="text-gray-600 mb-4">
           Service Review System is your trusted platform for discovering, reviewing, and sharing experiences about various services. 
           </p>
         </div>
@@ -25,27 +25,27 @@ const Footer = () => {
           <h3 className="text-xl md:text-2xl font-semibold mb-4">Useful Links</h3>
           <ul className="space-y-2">
             <li>
-              <a href="/" className="text-gray-400 hover:text-purple-400">
+              <a href="/" className="text-gray-600 hover:text-purple-400">
                 Home
               </a>
             </li>
             <li>
-              <a href="/about-us" className="text-gray-400 hover:text-purple-400">
+              <a href="/about-us" className="text-gray-600 hover:text-purple-400">
                 About Us
               </a>
             </li>
             <li>
-              <a href="/services" className="text-gray-400 hover:text-purple-400">
+              <a href="/services" className="text-gray-600 hover:text-purple-400">
                 Services
               </a>
             </li>
             <li>
-              <a href="/contact-us" className="text-gray-400 hover:text-purple-400">
+              <a href="/contact-us" className="text-gray-600 hover:text-purple-400">
                 Contact
               </a>
             </li>
             <li>
-              <a href="/contact-us" className="text-gray-400 hover:text-purple-400">
+              <a href="/contact-us" className="text-gray-600 hover:text-purple-400">
                 Privacy Policy
               </a>
             </li>
@@ -73,7 +73,7 @@ const Footer = () => {
             </div>
       </div>
       <div className="divider rounded-2xl"></div>
-      <p className="text-gray-500 text-lg text-center mt-3">&copy; {new Date().getFullYear()} Service Review System. All rights reserved.</p>
+      <p className="text-gray-600 text-lg text-center mt-3">&copy; {new Date().getFullYear()} Service Review System. All rights reserved.</p>
     </footer>
     
   );

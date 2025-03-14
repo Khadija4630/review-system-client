@@ -15,13 +15,13 @@ const Banner = () => {
     };
 
 
-    useEffect(() => {
-        const interval = setInterval(() => {
-          setCurrentSlide((prev) => (prev + 1) % slides.length);
-        }, 3000); 
+    // useEffect(() => {
+    //     const interval = setInterval(() => {
+    //       setCurrentSlide((prev) => (prev + 1) % slides.length);
+    //     }, 3000); 
     
-        return () => clearInterval(interval); 
-      }, []);
+    //     return () => clearInterval(interval); 
+    //   }, []);
   const slides = [
     {
       image: Slide3,
@@ -44,6 +44,7 @@ const Banner = () => {
   return (
     <div className="relative w-full h-[550px] rounded-xl overflow-hidden">
       {slides.map((slide, index) => (
+      
         <motion.div
           key={index}
           className={`absolute w-full h-full transition-all duration-700 ease-in-out`}
@@ -53,10 +54,10 @@ const Banner = () => {
             x: currentSlide === index ? 0 : 100, 
           }}
           exit={{ opacity: 0, x: -100 }} 
-          transition={{
-            opacity: { duration: 1 },
-            x: { type: 'spring', stiffness: 100, damping: 25 },
-          }}
+          // transition={{
+          //   opacity: { duration: 1 },
+          //   x: { type: 'spring', stiffness: 100, damping: 25 },
+          // }}
         >
           <img
             src={slide.image}

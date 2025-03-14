@@ -24,7 +24,7 @@ const MyServices = () => {
         }} );
         setServices(response.data);
         setLoading (false);
-        toast.success(' My Services fetched successfully');
+        // toast.success(' My Services fetched successfully');
       } catch (error) {
         console.error("Error fetching services:", error);
       }
